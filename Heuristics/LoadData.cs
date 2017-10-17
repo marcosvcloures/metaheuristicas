@@ -26,6 +26,8 @@ namespace Heuristics
             V_min = Convert.ToDouble(data[6].Split(' ').Last().Replace('.', ','));
             V_max = Convert.ToDouble(data[7].Split(' ').Last().Replace('.', ','));
 
+            V = (V_max - V_min) / W;
+
             Cities = new List<City>(N);
 
             for (i = 10; !data[i].StartsWith("ITEMS SECTION"); i++)

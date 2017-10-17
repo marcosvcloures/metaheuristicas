@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HeuristicsBase.Types.cs" />
+    <Compile Include="HeuristicsBase.Variables.cs" />
     <Compile Include="LoadData.cs" />
     <Compile Include="HeuristicsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

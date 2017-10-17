@@ -84,6 +84,12 @@ namespace Tests
         }
 
         [TestMethod]
+        public void TestV()
+        {
+            Assert.AreEqual(Heuristics.HeuristicsBase.V, 0.9 / 3);
+        }
+
+        [TestMethod]
         public void TestDistances()
         {
             int[,] dists =
