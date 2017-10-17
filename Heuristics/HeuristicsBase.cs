@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Heuristics
 {
-    public partial class HeuristicsBase
+    public static partial class HeuristicsBase
     {
         public static string Name { get; set; }
         public static DataTypeEnum DataType { get; set; }
@@ -21,9 +21,15 @@ namespace Heuristics
         public static List<City> Cities { get; set; }
         public static List<Item> Itens { get; set; }
 
-        public double Eval(int[] sol)
+        public static int[,] Distances;
+
+        public static Tuple<double, double, bool> Eval(List<int> path, HashSet<int> itens)
         {
-            return 0.0;
+            var objetive = itens.Aggregate(0, (p, agg) => agg + Itens[p].profit);
+
+            var citiesWithItens = itens.Select(p => Itens[p].city.id - 1);
+
+            return new Tuple<double, double, bool>(objetive, 0.0, false);
         }
     }
 }

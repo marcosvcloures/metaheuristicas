@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using static Heuristics.HeuristicsBase;
 
 namespace Heuristics
 {
-    public class LoadData : HeuristicsBase
+    public static class LoadData
     {
         public static void Load(string input)
         {
-            int i;
+            int i, j;
             var data = input.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
             Name = data[0].Split(' ').Last();
@@ -56,6 +56,22 @@ namespace Heuristics
 
                 Itens.Last().city.itens.Add(Itens.Last());
             }
+
+            Distances = new int[N, N];
+
+            for (i = 0; i < N; i++)
+                for (j = 0; j < N; j++)
+                {
+                    var dx = Cities[i].x - Cities[j].x;
+                    var dy = Cities[i].y - Cities[j].y;
+
+                    var dist = Math.Sqrt(dx * dx + dy * dy);
+
+                    Distances[i, j] = Convert.ToInt32(Math.Ceiling(dist));
+
+                    if (Distances[i, j] < 0)
+                        throw new Exception { Source = "Overflow nas distâncias" };
+                }
         }
     }
 }

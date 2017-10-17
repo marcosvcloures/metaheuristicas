@@ -2,7 +2,7 @@
 
 namespace Heuristics
 {
-    public partial class HeuristicsBase
+    public static partial class HeuristicsBase
     {
         public enum DataTypeEnum { UNCORRELATED, CORRELATED, SIMILAR };
         public enum WeightTypeEnum { CEIL_2D };

@@ -4,14 +4,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Tests
 {
     [TestClass]
-    public class LoadTest
+    public class LoadTest : Instance
     {
-        [TestInitialize]
-        public void LoadParameters()
-        {
-            Heuristics.LoadData.Load(Resources.instance);
-        }
-
         [TestMethod]
         public void Test_Cities()
         {
@@ -87,6 +81,22 @@ namespace Tests
         public void TestName()
         {
             Assert.AreEqual(Heuristics.HeuristicsBase.Name, "ex4-ThOP");
+        }
+
+        [TestMethod]
+        public void TestDistances()
+        {
+            int[,] dists =
+            {
+                {0, 5, 6, 8},
+                {5, 0, 8, 6},
+                {6, 8, 0, 5},
+                {8, 6, 5, 0}
+            };
+
+            for(int i = 0; i < Heuristics.HeuristicsBase.N; i++)
+                for (int j = 0; j < Heuristics.HeuristicsBase.N; j++)
+                    Assert.AreEqual(Heuristics.HeuristicsBase.Distances[i,j], dists[i, j]);
         }
     }
 }
