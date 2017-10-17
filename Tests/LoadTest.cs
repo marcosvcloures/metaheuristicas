@@ -6,22 +6,10 @@ namespace Tests
     [TestClass]
     public class LoadTest
     {
-        [TestMethod]
+        [TestInitialize]
         public void LoadParameters()
         {
             Heuristics.LoadData.Load(Resources.instance);
-
-            TestName();
-            TestDataType();
-            TestN();
-            TestM();
-            TestW();
-            TestT();
-            TestV_min();
-            TestV_max();
-            Test_WeightType();
-            Test_Cities();
-            Test_CityItens();
         }
 
         [TestMethod]

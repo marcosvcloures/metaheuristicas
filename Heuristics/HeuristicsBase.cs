@@ -21,6 +21,9 @@ namespace Heuristics
         public static List<City> Cities { get; set; }
         public static List<Item> Itens { get; set; }
 
-
+        public double Eval(int[] sol)
+        {
+            return 0.0;
+        }
     }
 }
