@@ -8,19 +8,37 @@ namespace Heuristics
 {
     public static partial class HeuristicsBase
     {
-        public static Tuple<double, double, bool> Eval(List<int> path, HashSet<int> itens)
+        public static Tuple<int, double, bool> Eval(List<int> path, HashSet<int> itens)
         {
             var objetive = itens.Aggregate(0, (agg, p) => agg + Itens[p].profit);
 
-            var citiesItens = new Dictionary<int, List<int>>();
+            var citiesWeights = new int[N];
 
             foreach (var it in itens)
-                if (citiesItens.ContainsKey(Itens[it].city.id - 1))
-                    citiesItens[Itens[it].city.id - 1].Add(it);
-                else
-                    citiesItens.Add(Itens[it].city.id - 1, new List<int>(new int[] { it }));
+                citiesWeights[Itens[it].city.id - 1] += Itens[it].weight;
 
-            return new Tuple<double, double, bool>(objetive, 0.0, false);
+            double velocity = V_max, time = 0;
+
+            if (path.Count > 0)
+                time = Distances[0, path[0]] / velocity;
+            else
+                time = Distances[0, N - 1] / velocity;
+
+            for (int i = 0; i < path.Count - 1; i++)
+            {
+                velocity -= V * citiesWeights[path[i]];
+
+                time += Distances[path[i + 1], path[i]] / velocity;
+            }
+
+            if(path.Count > 0)
+            {
+                velocity -= V * citiesWeights[path.Last()];
+
+                time += Distances[path.Last(), N-1] / velocity;
+            }
+
+            return new Tuple<int, double, bool>(objetive, time, time <= T);
         }
     }
 }
