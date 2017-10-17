@@ -7,7 +7,7 @@ namespace Tests
     public class LoadTest : Instance
     {
         [TestMethod]
-        public void Test_Cities()
+        public void TestCities()
         {
             Assert.AreEqual(Heuristics.HeuristicsBase.Cities.Count, 4);
             Assert.AreEqual(Heuristics.HeuristicsBase.Cities[2].x, 1.0);
@@ -15,7 +15,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public void Test_Itens()
+        public void TestItens()
         {
             Assert.AreEqual(Heuristics.HeuristicsBase.Itens.Count, 5);
             Assert.AreEqual(Heuristics.HeuristicsBase.Itens[2].profit, 100);
@@ -23,14 +23,14 @@ namespace Tests
         }
 
         [TestMethod]
-        public void Test_CityItens()
+        public void TestCityItens()
         {
             Assert.AreEqual(Heuristics.HeuristicsBase.Cities[2].itens.Count, 3);
             Assert.AreEqual(Heuristics.HeuristicsBase.Cities[2].itens[2].city.id, 3);
         }
 
         [TestMethod]
-        public void Test_WeightType()
+        public void TestWeightType()
         {
             Assert.AreEqual(Heuristics.HeuristicsBase.WeightType, Heuristics.HeuristicsBase.WeightTypeEnum.CEIL_2D);
         }
