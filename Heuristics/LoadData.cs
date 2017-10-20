@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Text.RegularExpressions;
 using static Heuristics.HeuristicsBase;
 
 namespace Heuristics
@@ -13,18 +13,19 @@ namespace Heuristics
             int i, j;
             var data = input.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
-            Name = data[0].Split(' ').Last();
+            Name = Regex.Split(data[0], @"\s+").Last();
 
-            DataType = data[1].Split(' ').Last() == "uncorrelated" ? DataTypeEnum.UNCORRELATED :
-                data[1].Split(' ').Last() == "similar" ? DataTypeEnum.SIMILAR : DataTypeEnum.CORRELATED;
+            var dt = Regex.Split(data[1], @"\s+");
+            DataType = dt.Last() == "uncorrelated" ? DataTypeEnum.UNCORRELATED :
+                dt.Last() == "similar" ? DataTypeEnum.SIMILAR : DataTypeEnum.CORRELATED;
 
-            N = Convert.ToInt32(data[2].Split(' ').Last());
-            M = Convert.ToInt32(data[3].Split(' ').Last());
-            W = Convert.ToInt32(data[4].Split(' ').Last());
-            T = Convert.ToInt32(data[5].Split(' ').Last());
+            N = Convert.ToInt32(Regex.Split(data[2], @"\s+").Last());
+            M = Convert.ToInt32(Regex.Split(data[3], @"\s+").Last());
+            W = Convert.ToInt32(Regex.Split(data[4], @"\s+").Last());
+            T = Convert.ToInt32(Regex.Split(data[5], @"\s+").Last());
 
-            V_min = Convert.ToDouble(data[6].Split(' ').Last().Replace('.', ','));
-            V_max = Convert.ToDouble(data[7].Split(' ').Last().Replace('.', ','));
+            V_min = Convert.ToDouble(Regex.Split(data[6], @"\s+").Last().Replace('.', ','));
+            V_max = Convert.ToDouble(Regex.Split(data[7], @"\s+").Last().Replace('.', ','));
 
             V = (V_max - V_min) / W;
 
@@ -32,8 +33,8 @@ namespace Heuristics
 
             for (i = 10; !data[i].StartsWith("ITEMS SECTION"); i++)
             {
-                var split = data[i].Split('\t');
-
+                // var split = data[i].Split('\t');
+                var split = Regex.Split(data[i], @"\s+");
                 Cities.Add(new City
                 {
                     id = Convert.ToInt32(split[0]),
@@ -46,7 +47,7 @@ namespace Heuristics
 
             for (i++; i < data.Length; i++)
             {
-                var split = data[i].Split('\t');
+                var split = Regex.Split(data[i], @"\s+");
 
                 Itens.Add(new Item
                 {

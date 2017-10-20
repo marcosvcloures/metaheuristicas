@@ -57,9 +57,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="EvalTest.cs" />
+    <Compile Include="BigInstance.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\grande.thop" />
     <None Include="Resources\instance.thop" />
   </ItemGroup>
   <ItemGroup>

@@ -61,6 +61,38 @@ namespace Tests {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PROBLEM NAME: 	dsj1000-ThOP
+        ///KNAPSACK DATA TYPE: uncorrelated
+        ///DIMENSION: 1000
+        ///NUMBER OF ITEMS: 9980
+        ///CAPACITY OF KNAPSACK: 2275942
+        ///MAX TIME: 15654897
+        ///MIN SPEED: 0.10
+        ///MAX SPEED: 1.00
+        ///EDGE_WEIGHT_TYPE:   CEIL_2D
+        ///NODE_COORD_SECTION  (INDEX, X, Y):
+        ///1 981036.0 508139.0
+        ///2 534120.0 -42453.0
+        ///3 577878.0 -43732.0
+        ///4 532890.0 -96645.0
+        ///5 205322.0 215891.0
+        ///6 225923.0 197950.0
+        ///7 69842.0 667632.0
+        ///8 391965.0 1054524.0
+        ///9 310065.0 -10714.0
+        ///10 247401.0 754523.0
+        ///11 217951.0 218350.0
+        ///12 443097.0 54051.0
+        ///13 47342.0 630935.0
+        ///14 317 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string big_instance {
+            get {
+                return ResourceManager.GetString("big_instance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PROBLEM NAME:   ex4-ThOP
         ///KNAPSACK DATA TYPE: uncorrelated
         ///DIMENSION:      4
