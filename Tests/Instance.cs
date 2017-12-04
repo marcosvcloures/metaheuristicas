@@ -12,7 +12,7 @@ namespace Tests
         [TestInitialize]
         public void LoadInstance()
         {
-            Heuristics.LoadData.Load(Resources.instance);
+            Heuristics.HeuristicsBase.Load(Resources.instance);
         }
     }
 }

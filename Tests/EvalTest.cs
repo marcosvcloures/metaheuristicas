@@ -10,7 +10,7 @@ namespace Tests
         [TestMethod]
         public void TestSolutionA()
         {
-            var result = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 1, 2 }), new HashSet<int>(new int[] { 0, 3 }));
+            var result = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 2, 3 }), new HashSet<int>(new int[] { 0, 3 }));
 
             Assert.AreEqual(result.Item1, 60);
             
@@ -22,7 +22,7 @@ namespace Tests
         [TestMethod]
         public void TestSolutionB()
         {
-            var result = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 2, 1 }), new HashSet<int>(new int[] { 0, 3 }));
+            var result = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 3, 2 }), new HashSet<int>(new int[] { 0, 3 }));
             
             Assert.AreEqual(result.Item3, false);
         }
@@ -30,7 +30,7 @@ namespace Tests
         [TestMethod]
         public void TestSolutionC()
         {
-            var result = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 2 }), new HashSet<int>(new int[] { 2 }));
+            var result = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 3 }), new HashSet<int>(new int[] { 2 }));
 
             Assert.AreEqual(result.Item1, 100);
 
@@ -42,7 +42,7 @@ namespace Tests
         [TestMethod]
         public void TestSolutionD()
         {
-            var result = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 2 }), new HashSet<int>(new int[] { 3, 4 }));
+            var result = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 3 }), new HashSet<int>(new int[] { 3, 4 }));
 
             Assert.AreEqual(result.Item1, 80);
 

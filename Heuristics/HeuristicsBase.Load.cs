@@ -6,7 +6,7 @@ using static Heuristics.HeuristicsBase;
 
 namespace Heuristics
 {
-    public static class LoadData
+    public partial class HeuristicsBase
     {
         public static void Load(string input)
         {
@@ -43,13 +43,13 @@ namespace Heuristics
                 });
             }
 
-            Itens = new List<Item>(M);
+            Items = new List<Item>(M);
 
             for (i++; i < data.Length; i++)
             {
                 var split = Regex.Split(data[i], @"\s+");
 
-                Itens.Add(new Item
+                Items.Add(new Item
                 {
                     id = Convert.ToInt32(split[0]),
                     profit = Convert.ToInt32(split[1]),
@@ -57,7 +57,7 @@ namespace Heuristics
                     city = Cities[Convert.ToInt32(split[3]) - 1]
                 });
 
-                Itens.Last().city.itens.Add(Itens.Last());
+                Items.Last().city.itens.Add(Items.Last());
             }
 
             Distances = new int[N, N];
@@ -75,6 +75,10 @@ namespace Heuristics
                     if (Distances[i, j] < 0)
                         throw new Exception { Source = "Overflow nas distâncias" };
                 }
+
+            ItemsGreedy = null;
+
+            rand = new Random();
         }
     }
 }

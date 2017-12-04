@@ -9,7 +9,7 @@ namespace Tests
         [TestInitialize]
         public void LoadInstance()
         {
-            Heuristics.LoadData.Load(Resources.big_instance);
+            Heuristics.HeuristicsBase.Load(Resources.big_instance);
         }
 
         [TestMethod]
@@ -28,15 +28,15 @@ namespace Tests
         [TestMethod]
         public void TestItems()
         {
-            Assert.AreEqual(Heuristics.HeuristicsBase.Itens.Count, 9980);
+            Assert.AreEqual(Heuristics.HeuristicsBase.Items.Count, 9980);
         }
 
         [TestMethod]
         public void TestItem()
         {
-            Assert.AreEqual(Heuristics.HeuristicsBase.Itens[6666].city.id, 680);
-            Assert.AreEqual(Heuristics.HeuristicsBase.Itens[6666].profit, 700);
-            Assert.AreEqual(Heuristics.HeuristicsBase.Itens[6666].weight, 638);
+            Assert.AreEqual(Heuristics.HeuristicsBase.Items[6666].city.id, 680);
+            Assert.AreEqual(Heuristics.HeuristicsBase.Items[6666].profit, 700);
+            Assert.AreEqual(Heuristics.HeuristicsBase.Items[6666].weight, 638);
         }
     }
 }

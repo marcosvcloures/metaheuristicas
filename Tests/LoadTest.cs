@@ -17,9 +17,9 @@ namespace Tests
         [TestMethod]
         public void TestItens()
         {
-            Assert.AreEqual(Heuristics.HeuristicsBase.Itens.Count, 5);
-            Assert.AreEqual(Heuristics.HeuristicsBase.Itens[2].profit, 100);
-            Assert.AreEqual(Heuristics.HeuristicsBase.Itens[2].weight, 3);
+            Assert.AreEqual(Heuristics.HeuristicsBase.Items.Count, 5);
+            Assert.AreEqual(Heuristics.HeuristicsBase.Items[2].profit, 100);
+            Assert.AreEqual(Heuristics.HeuristicsBase.Items[2].weight, 3);
         }
 
         [TestMethod]
