@@ -14,9 +14,9 @@ namespace Tests
 
             Assert.AreEqual(result.Item1, 60);
             
-            Assert.IsTrue(Math.Abs(result.Item2 - 75.0) < 1e-10);
+            Assert.IsTrue(Math.Abs(result.Item3 - 75.0) < 1e-10);
 
-            Assert.AreEqual(result.Item3, true);
+            Assert.AreEqual(result.Item4, true);
         }
 
         [TestMethod]
@@ -24,7 +24,7 @@ namespace Tests
         {
             var result = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 3, 2 }), new HashSet<int>(new int[] { 0, 3 }));
             
-            Assert.AreEqual(result.Item3, false);
+            Assert.AreEqual(result.Item4, false);
         }
 
         [TestMethod]
@@ -34,9 +34,9 @@ namespace Tests
 
             Assert.AreEqual(result.Item1, 100);
 
-            Assert.IsTrue(Math.Abs(result.Item2 - 56.0) < 1e-10);
+            Assert.IsTrue(Math.Abs(result.Item3 - 56.0) < 1e-10);
 
-            Assert.AreEqual(result.Item3, true);
+            Assert.AreEqual(result.Item4, true);
         }
 
         [TestMethod]
@@ -46,9 +46,9 @@ namespace Tests
 
             Assert.AreEqual(result.Item1, 80);
 
-            Assert.IsTrue(Math.Abs(result.Item2 - 18.5) < 1e-10);
+            Assert.IsTrue(Math.Abs(result.Item3 - 18.5) < 1e-10);
 
-            Assert.AreEqual(result.Item3, true);
+            Assert.AreEqual(result.Item4, true);
         }
     }
 }

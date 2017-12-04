@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heuristics", "Heuristics\Heuristics.csproj", "{C127F538-EF1F-4279-9E78-C8CFF87840B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner", "Runner\Runner.csproj", "{8DD1C7E7-B06B-40D6-93F0-5D748EF93E0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{C127F538-EF1F-4279-9E78-C8CFF87840B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C127F538-EF1F-4279-9E78-C8CFF87840B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C127F538-EF1F-4279-9E78-C8CFF87840B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DD1C7E7-B06B-40D6-93F0-5D748EF93E0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DD1C7E7-B06B-40D6-93F0-5D748EF93E0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DD1C7E7-B06B-40D6-93F0-5D748EF93E0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DD1C7E7-B06B-40D6-93F0-5D748EF93E0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,9 +6,10 @@ namespace Heuristics
 {
     public static partial class HeuristicsBase
     {
-        public static Tuple<int, double, bool> Eval(List<int> items)
+        public static Tuple<int, int, double, bool> Eval(List<int> items)
         {
             var objetive = items.Aggregate(0, (agg, p) => agg + Items[p].profit);
+            var capacity = items.Aggregate(0, (agg, p) => agg + Items[p].weight);
 
             double velocity = V_max, time = 0.0;
 
@@ -38,14 +39,14 @@ namespace Heuristics
                 time += Distances[Items[items.Last()].city.id - 1, N - 1] / velocity;
             }
 
-            return new Tuple<int, double, bool>(objetive, time, time <= T);
+            return new Tuple<int, int, double, bool>(objetive, capacity, time, time <= T && capacity <= W);
         }
 
-        public static Tuple<int, double, bool> Eval(List<int> path, HashSet<int> items)
+        public static Tuple<int, int, double, bool> Eval(List<int> path, HashSet<int> items)
         {
             foreach (var it in items)
                 if (path.FindIndex(p => p == Items[it].city.id) == -1)
-                    return new Tuple<int, double, bool>(0, 0, false);
+                    return new Tuple<int, int, double, bool>(0, 0, 0, false);
 
             List<int> itensOrdered = new List<int>(items).OrderBy(p => path.FindIndex(q => q == Items[p].city.id)).ToList();
 
@@ -57,7 +58,7 @@ namespace Heuristics
             var solution = new List<int>();
             var used = new HashSet<int>();
 
-            while (Eval(solution).Item3 && used.Count != M)
+            while (Eval(solution).Item4 && used.Count != M)
             {
                 var item = rand.Next(M);
 
@@ -85,50 +86,49 @@ namespace Heuristics
 
             var eval = Eval(solution);
 
-            try
+            while (true)
             {
-                while (true)
+                evals.Clear();
+
+                foreach (var it in valid)
                 {
-                    evals.Clear();
+                    solution.Add(it);
+                    eval = Eval(solution);
 
-                    foreach (var it in valid)
+                    if (eval.Item4)
                     {
-                        solution.Add(it);
-                        eval = Eval(solution);
-
-                        if (eval.Item3)
+                        if(DataType == DataTypeEnum.UNCORRELATED)
+                            evals.Add(new Tuple<int, double>(it, eval.Item1 / (eval.Item2 * eval.Item3)));
+                        else if(DataType == DataTypeEnum.CORRELATED)
+                            evals.Add(new Tuple<int, double>(it, eval.Item1 / eval.Item3));
+                        else if(DataType == DataTypeEnum.SIMILAR)
                             evals.Add(new Tuple<int, double>(it, eval.Item1 / eval.Item2));
-
-                        solution.Remove(solution.Last());
                     }
-
-                    if (evals.Count == 0)
-                        return solution;
-
-                    evals = evals.OrderByDescending(p => p.Item2).ToList();
-
-                    var tot = evals.Aggregate(0.0, (agg, p) => agg + p.Item2);
-
-                    var sum = 0.0;
-
-                    var lim = 0;
-
-                    for (; lim < evals.Count; lim++)
-                    {
-                        sum += evals[lim].Item2 / tot;
-
-                        if (sum >= alfa)
-                            break;
-                    }
-
-                    solution.Add(evals[rand.Next(lim + 1)].Item1);
-
-                    valid.Remove(solution.Last());
+                    solution.Remove(solution.Last());
                 }
-            }
-            catch (Exception ex)
-            {
-                return solution;
+
+                if (evals.Count == 0)
+                    return solution;
+
+                evals = evals.OrderByDescending(p => p.Item2).ToList();
+
+                var tot = evals.Aggregate(0.0, (agg, p) => agg + p.Item2);
+
+                var sum = 0.0;
+
+                var lim = 0;
+
+                for (; lim < evals.Count; lim++)
+                {
+                    sum += evals[lim].Item2 / tot;
+
+                    if (sum >= alfa)
+                        break;
+                }
+
+                solution.Add(evals[rand.Next(lim + 1)].Item1);
+
+                valid.Remove(solution.Last());
             }
         }
     }
