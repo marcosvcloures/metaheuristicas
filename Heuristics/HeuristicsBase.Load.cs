@@ -75,9 +75,7 @@ namespace Heuristics
                     if (Distances[i, j] < 0)
                         throw new Exception { Source = "Overflow nas distâncias" };
                 }
-
-            ItemsGreedy = null;
-
+            
             rand = new Random();
         }
     }

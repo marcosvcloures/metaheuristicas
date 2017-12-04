@@ -20,11 +20,7 @@ namespace Heuristics
 
         public static List<City> Cities { get; set; }
         public static List<Item> Items { get; set; }
-
-        // Greedy vars
-        private static List<Item> ItemsGreedy { get; set; }
-        private static double PPWDTotal { get; set; }
-
+        
         // Heuristic vars
         public static Random rand { get; set; }
 

@@ -13,6 +13,8 @@ namespace Tests
         public void LoadInstance()
         {
             Heuristics.HeuristicsBase.Load(Resources.instance);
+
+            Heuristics.HeuristicsBase.GreedySolution();
         }
     }
 }
