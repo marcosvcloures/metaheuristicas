@@ -117,12 +117,12 @@ namespace Heuristics
             for (var i = 0; i < M; i++)
                 valid.Add(i);
 
+            var oldEval = Eval(solution);
+
             while (true)
             {
                 evals.Clear();
-
-                var oldEval = Eval(solution);
-
+                
                 foreach (var it in valid)
                 {
                     var eval = Eval(oldEval, solution.Count > 0 ? (int?)solution.Last() : null, it);
@@ -163,9 +163,13 @@ namespace Heuristics
                         break;
                 }
 
-                solution.Add(evals[rand.Next(lim + 1)].Item1);
+                var newItem = evals[rand.Next(lim + 1)].Item1;
+                
+                oldEval = Eval(oldEval, solution.Count > 0 ? (int?)solution.Last() : null, newItem);
 
-                valid.Remove(solution.Last());
+                solution.Add(newItem);
+
+                valid.Remove(newItem);
             }
         }
     }
