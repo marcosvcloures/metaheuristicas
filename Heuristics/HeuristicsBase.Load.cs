@@ -33,7 +33,6 @@ namespace Heuristics
 
             for (i = 10; !data[i].StartsWith("ITEMS SECTION"); i++)
             {
-                // var split = data[i].Split('\t');
                 var split = Regex.Split(data[i], @"\s+");
                 Cities.Add(new City
                 {

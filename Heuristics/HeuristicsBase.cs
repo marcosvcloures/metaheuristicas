@@ -6,10 +6,11 @@ namespace Heuristics
 {
     public static partial class HeuristicsBase
     {
-        public static Tuple<int, int, double, bool> Eval(List<int> items)
+        // Eval in O(n)
+        public static Tuple<int, int, double, bool, double> Eval(List<int> items)
         {
             var objetive = items.Aggregate(0, (agg, p) => agg + Items[p].profit);
-            var capacity = items.Aggregate(0, (agg, p) => agg + Items[p].weight);
+            var weight = items.Aggregate(0, (agg, p) => agg + Items[p].weight);
 
             double velocity = V_max, time = 0.0;
 
@@ -39,14 +40,46 @@ namespace Heuristics
                 time += Distances[Items[items.Last()].city.id - 1, N - 1] / velocity;
             }
 
-            return new Tuple<int, int, double, bool>(objetive, capacity, time, time <= T && capacity <= W);
+            return new Tuple<int, int, double, bool, double>(objetive, weight, time, time <= T && weight <= W, velocity);
         }
 
-        public static Tuple<int, int, double, bool> Eval(List<int> path, HashSet<int> items)
+        // Append eval in O(1)
+        public static Tuple<int, int, double, bool, double> Eval(Tuple<int, int, double, bool, double> eval, int? lastItem, int item)
+        {
+            var profit = eval.Item1;
+            var weight = eval.Item2;
+            var time = eval.Item3;
+            var velocity = eval.Item5;
+
+            if (lastItem.HasValue)
+                time -= Distances[Items[lastItem.Value].city.id - 1, N - 1] / velocity;
+            else
+                time -= Distances[0, N - 1] / velocity;
+
+            weight += Items[item].weight;
+
+            if (lastItem.HasValue)
+                time += Distances[Items[lastItem.Value].city.id - 1, Items[item].city.id - 1] / velocity;
+            else
+                time += Distances[0, Items[item].city.id - 1] / velocity;
+
+            velocity -= V * Items[item].weight;
+
+            velocity = Math.Max(V_min, velocity);
+
+            time += Distances[Items[item].city.id - 1, N - 1] / velocity;
+
+            profit += Items[item].profit;
+
+            return new Tuple<int, int, double, bool, double>(profit, weight, time, time <= T && weight <= W, velocity);
+        }
+
+        // Not needed at all, xP
+        public static Tuple<int, int, double, bool, double> Eval(List<int> path, HashSet<int> items)
         {
             foreach (var it in items)
                 if (path.FindIndex(p => p == Items[it].city.id) == -1)
-                    return new Tuple<int, int, double, bool>(0, 0, 0, false);
+                    return new Tuple<int, int, double, bool, double>(0, 0, 0, false, 0);
 
             List<int> itensOrdered = new List<int>(items).OrderBy(p => path.FindIndex(q => q == Items[p].city.id)).ToList();
 
@@ -84,27 +117,31 @@ namespace Heuristics
             for (var i = 0; i < M; i++)
                 valid.Add(i);
 
-            var eval = Eval(solution);
-
             while (true)
             {
                 evals.Clear();
 
+                var oldEval = Eval(solution);
+
                 foreach (var it in valid)
                 {
-                    solution.Add(it);
-                    eval = Eval(solution);
+                    var eval = Eval(oldEval, solution.Count > 0 ? (int?)solution.Last() : null, it);
 
                     if (eval.Item4)
                     {
-                        if(DataType == DataTypeEnum.UNCORRELATED)
-                            evals.Add(new Tuple<int, double>(it, eval.Item1 / (eval.Item2 * eval.Item3)));
-                        else if(DataType == DataTypeEnum.CORRELATED)
-                            evals.Add(new Tuple<int, double>(it, eval.Item1 / eval.Item3));
-                        else if(DataType == DataTypeEnum.SIMILAR)
-                            evals.Add(new Tuple<int, double>(it, eval.Item1 / eval.Item2));
+                        switch (DataType)
+                        {
+                            case DataTypeEnum.UNCORRELATED:
+                                evals.Add(new Tuple<int, double>(it, eval.Item1 / (eval.Item2 * eval.Item3)));
+                                break;
+                            case DataTypeEnum.CORRELATED:
+                                evals.Add(new Tuple<int, double>(it, eval.Item1 / eval.Item3));
+                                break;
+                            case DataTypeEnum.SIMILAR:
+                                evals.Add(new Tuple<int, double>(it, eval.Item1 / eval.Item2));
+                                break;
+                        }
                     }
-                    solution.Remove(solution.Last());
                 }
 
                 if (evals.Count == 0)

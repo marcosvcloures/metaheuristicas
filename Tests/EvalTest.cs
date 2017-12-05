@@ -50,5 +50,42 @@ namespace Tests
 
             Assert.AreEqual(result.Item4, true);
         }
+
+        [TestMethod]
+        public void TestSimullateEval()
+        {
+            var evalInit = Heuristics.HeuristicsBase.Eval(new List<int>());
+
+            var evalSimullated = Heuristics.HeuristicsBase.Eval(evalInit, null, 3);
+
+            var evalReal = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 3 }));
+
+            Assert.AreEqual(evalReal, evalSimullated);
+        }
+
+        [TestMethod]
+        public void TestSimullateEval2()
+        {
+            var evalInit = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 0 }));
+
+            var evalSimullated = Heuristics.HeuristicsBase.Eval(evalInit, 0, 3);
+
+            var evalReal = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 0, 3 }));
+
+            Assert.AreEqual(evalReal, evalSimullated);
+        }
+
+        [TestMethod]
+        public void TestSimullateEval3()
+        {
+            var evalInit = Heuristics.HeuristicsBase.Eval(new List<int>());
+
+            var evalSimullated = Heuristics.HeuristicsBase.Eval(evalInit, null, 0);
+            evalSimullated = Heuristics.HeuristicsBase.Eval(evalSimullated, 0, 3);
+
+            var evalReal = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 0, 3 }));
+
+            Assert.AreEqual(evalReal, evalSimullated);
+        }
     }
 }

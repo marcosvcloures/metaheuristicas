@@ -29,11 +29,6 @@ namespace Heuristics
             //Profit per weighted distance
             public int id, profit, weight;
             public City city;
-            
-            public double ppwd
-            {
-                get { return profit / weight * city.distance; }
-            }
         }
     }
 }

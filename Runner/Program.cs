@@ -12,21 +12,36 @@ namespace Runner
     {
         static void Main(string[] args)
         {
-            var directories = Directory.GetDirectories(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\\instances");
-
-            foreach (var it in directories)
+            if (args.Length > 0 && args[0] == "-f")
             {
-                var files = Directory.GetFiles(it);
+                var directories = Directory.GetDirectories(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\\instances");
 
-                foreach (var file in files)
+                foreach (var it in directories)
                 {
-                    Heuristics.HeuristicsBase.Load(new StreamReader(file).ReadToEnd());
+                    var files = Directory.GetFiles(it);
 
-                    var sol = Heuristics.HeuristicsBase.GreedySolution();
+                    foreach (var file in files)
+                    {
+                        Heuristics.HeuristicsBase.Load(new StreamReader(file).ReadToEnd());
 
-                    Console.WriteLine(file.Split('\\').Last());
-                    Console.WriteLine(Heuristics.HeuristicsBase.Eval(sol).Item1);
+                        var sol = Heuristics.HeuristicsBase.GreedySolution();
+
+                        Console.WriteLine(file.Split('\\').Last());
+                        Console.WriteLine(Heuristics.HeuristicsBase.Eval(sol).Item1);
+                    }
                 }
+            }
+            else
+            {
+                var entrada = "";
+                int key;
+
+                while ((key = Console.Read()) != -1)
+                    entrada += Char.ConvertFromUtf32(key);
+
+                Heuristics.HeuristicsBase.Load(entrada);
+
+                Console.WriteLine(Heuristics.HeuristicsBase.Eval(Heuristics.HeuristicsBase.GreedySolution()).Item1);
             }
         }
     }
