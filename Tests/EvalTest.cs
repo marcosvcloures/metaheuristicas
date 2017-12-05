@@ -13,7 +13,7 @@ namespace Tests
             var result = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 2, 3 }), new HashSet<int>(new int[] { 0, 3 }));
 
             Assert.AreEqual(result.Item1, 60);
-            
+
             Assert.IsTrue(Math.Abs(result.Item3 - 75.0) < 1e-10);
 
             Assert.AreEqual(result.Item4, true);
@@ -23,7 +23,7 @@ namespace Tests
         public void TestSolutionB()
         {
             var result = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 3, 2 }), new HashSet<int>(new int[] { 0, 3 }));
-            
+
             Assert.AreEqual(result.Item4, false);
         }
 
@@ -86,6 +86,25 @@ namespace Tests
             var evalReal = Heuristics.HeuristicsBase.Eval(new List<int>(new int[] { 0, 3 }));
 
             Assert.AreEqual(evalReal, evalSimullated);
+        }
+
+        [TestMethod]
+        public void RandomIsValid()
+        {
+            for (var i = 0; i < 1000; i++)
+                Assert.AreEqual(Heuristics.HeuristicsBase.Eval(Heuristics.HeuristicsBase.RandomSolution()).Item4, true);
+        }
+
+        [TestMethod]
+        public void GreedyIsValid()
+        {
+            Assert.AreEqual(Heuristics.HeuristicsBase.Eval(Heuristics.HeuristicsBase.GreedySolution()).Item4, true);
+
+            for (var i = 0; i < 100; i++)
+            {
+                Assert.AreEqual(Heuristics.HeuristicsBase.Eval(Heuristics.HeuristicsBase.GreedySolution(0.5)).Item4, true);
+                Assert.AreEqual(Heuristics.HeuristicsBase.Eval(Heuristics.HeuristicsBase.GreedySolution(1)).Item4, true);
+            }
         }
     }
 }

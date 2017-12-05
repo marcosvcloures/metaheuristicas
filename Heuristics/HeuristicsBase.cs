@@ -74,38 +74,47 @@ namespace Heuristics
             return new Tuple<int, int, double, bool, double>(profit, weight, time, time <= T && weight <= W, velocity);
         }
 
-        // Not needed at all, xP
         public static Tuple<int, int, double, bool, double> Eval(List<int> path, HashSet<int> items)
         {
+            List<int> map = new List<int>(N);
+
+            for (var i = 0; i < N; i++)
+                map.Add(-1);
+
+            for (var i = 0; i < path.Count; i++)
+                map[path[i] - 1] = i;
+
             foreach (var it in items)
-                if (path.FindIndex(p => p == Items[it].city.id) == -1)
+                if (map[Items[it].city.id - 1] == -1)
                     return new Tuple<int, int, double, bool, double>(0, 0, 0, false, 0);
 
-            List<int> itensOrdered = new List<int>(items).OrderBy(p => path.FindIndex(q => q == Items[p].city.id)).ToList();
+            List<int> itensOrdered = new List<int>(items).OrderBy(p => map[Items[p].city.id - 1]).ToList();
 
             return Eval(itensOrdered);
         }
 
         public static List<int> RandomSolution()
         {
-            var solution = new List<int>();
-            var used = new HashSet<int>();
+            var solution = new List<int>(M);
 
-            while (Eval(solution).Item4 && used.Count != M)
+            int i;
+
+            for (i = 0; i < M; i++)
+                solution.Add(i);
+
+            rand.Shuffle<int>(ref solution);
+            
+            var eval = Eval(new List<int>());
+            
+            for (i = 0; i < M; i++)
             {
-                var item = rand.Next(M);
+                eval = Eval(eval, i != 0 ? (int?)solution[i - 1] : null, solution[i]);
 
-                while (used.Contains(item))
-                    item = rand.Next(M);
-
-                solution.Add(item);
-                used.Add(item);
+                if(!eval.Item4)
+                    break;
             }
-
-            if (used.Count != M)
-                solution.Remove(solution.Last());
-
-            return solution;
+            
+            return solution.Take(i).ToList();
         }
 
         public static List<int> GreedySolution(double alfa = 0)
@@ -122,7 +131,7 @@ namespace Heuristics
             while (true)
             {
                 evals.Clear();
-                
+
                 foreach (var it in valid)
                 {
                     var eval = Eval(oldEval, solution.Count > 0 ? (int?)solution.Last() : null, it);
@@ -163,8 +172,11 @@ namespace Heuristics
                         break;
                 }
 
+                if (lim == evals.Count)
+                    lim--;
+
                 var newItem = evals[rand.Next(lim + 1)].Item1;
-                
+
                 oldEval = Eval(oldEval, solution.Count > 0 ? (int?)solution.Last() : null, newItem);
 
                 solution.Add(newItem);

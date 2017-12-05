@@ -38,5 +38,18 @@ namespace Tests
             Assert.AreEqual(Heuristics.HeuristicsBase.Items[6666].profit, 700);
             Assert.AreEqual(Heuristics.HeuristicsBase.Items[6666].weight, 638);
         }
+
+        [TestMethod, Timeout(200)]
+        public void RandomIsFast()
+        {
+            for(var i = 0; i < 100; i++)
+                Heuristics.HeuristicsBase.Eval(Heuristics.HeuristicsBase.RandomSolution());
+        }
+
+        [TestMethod, Timeout(20000)]
+        public void GreedyIsFast()
+        {
+            Heuristics.HeuristicsBase.Eval(Heuristics.HeuristicsBase.GreedySolution());
+        }
     }
 }
