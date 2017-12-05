@@ -140,14 +140,13 @@ namespace Heuristics
                     {
                         switch (DataType)
                         {
-                            case DataTypeEnum.UNCORRELATED:
-                                evals.Add(new Tuple<int, double>(it, eval.Item1 / (eval.Item2 * eval.Item3)));
-                                break;
                             case DataTypeEnum.CORRELATED:
                                 evals.Add(new Tuple<int, double>(it, eval.Item1 / eval.Item3));
                                 break;
+
+                            case DataTypeEnum.UNCORRELATED:
                             case DataTypeEnum.SIMILAR:
-                                evals.Add(new Tuple<int, double>(it, eval.Item1 / eval.Item2));
+                                evals.Add(new Tuple<int, double>(it, eval.Item1 / (eval.Item3 * eval.Item3)));
                                 break;
                         }
                     }
@@ -183,6 +182,16 @@ namespace Heuristics
 
                 valid.Remove(newItem);
             }
+        }
+
+        public static void ImproveSolution(ref List<int> solution)
+        {
+            var lastAppear = new Dictionary<int, int>();
+
+            for (var i = 0; i < solution.Count; i++)
+                lastAppear[Items[solution[i]].city.id] = i;
+
+            solution = solution.OrderBy(p => lastAppear[Items[p].city.id]).ToList();
         }
     }
 }

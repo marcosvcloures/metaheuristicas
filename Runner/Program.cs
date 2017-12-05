@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using Heuristics;
 
 namespace Runner
 {
@@ -13,6 +14,7 @@ namespace Runner
         static void Main(string[] args)
         {
             if (args.Length > 0 && args[0] == "-f")
+            // if(args.Length == 0)
             {
                 var directories = Directory.GetDirectories(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\\instances");
 
@@ -26,7 +28,10 @@ namespace Runner
 
                         var sol = Heuristics.HeuristicsBase.GreedySolution();
 
-                        Console.WriteLine(file.Split('\\').Last());
+                        var vns = new VNS(sol);
+
+                        sol = vns.Run();
+
                         Console.WriteLine(Heuristics.HeuristicsBase.Eval(sol).Item1);
                     }
                 }
@@ -39,9 +44,12 @@ namespace Runner
                 while ((key = Console.Read()) != -1)
                     entrada += Char.ConvertFromUtf32(key);
 
-                Heuristics.HeuristicsBase.Load(entrada);
+                HeuristicsBase.Load(entrada);
 
-                Console.WriteLine(Heuristics.HeuristicsBase.Eval(Heuristics.HeuristicsBase.GreedySolution()).Item1);
+                //var sol = new VNS().Run();
+                var sol = new GRASP().Run();
+
+                Console.WriteLine(Heuristics.HeuristicsBase.Eval(sol).Item1);
             }
         }
     }

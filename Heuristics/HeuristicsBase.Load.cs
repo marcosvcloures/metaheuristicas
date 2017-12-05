@@ -15,9 +15,9 @@ namespace Heuristics
 
             Name = Regex.Split(data[0], @"\s+").Last();
 
-            var dt = Regex.Split(data[1], @"\s+");
-            DataType = dt.Last() == "uncorrelated" ? DataTypeEnum.UNCORRELATED :
-                dt.Last() == "similar" ? DataTypeEnum.SIMILAR : DataTypeEnum.CORRELATED;
+            var dt = Regex.Split(data[1], @"\s+").Last(p => p != "");
+            DataType = dt == "uncorrelated" ? DataTypeEnum.UNCORRELATED :
+                dt == "weights" ? DataTypeEnum.SIMILAR : DataTypeEnum.CORRELATED;
 
             N = Convert.ToInt32(Regex.Split(data[2], @"\s+").Last());
             M = Convert.ToInt32(Regex.Split(data[3], @"\s+").Last());

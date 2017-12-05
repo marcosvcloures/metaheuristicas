@@ -40,12 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GRASP.cs" />
     <Compile Include="HeuristicsBase.Types.cs" />
     <Compile Include="HeuristicsBase.Variables.cs" />
     <Compile Include="HeuristicsBase.Load.cs" />
     <Compile Include="HeuristicsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomExtensions.cs" />
+    <Compile Include="VNS.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
